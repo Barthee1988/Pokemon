@@ -26,7 +26,7 @@
 
 ## About The Project
 
-Pokemon. The name itself is enough for us. it takes you to your childhood life.
+Pokemon. The name itself is enough for us it takes us to our childhood life.
 
 In this application, we show all generations of pokemon in one place in card view.
 
