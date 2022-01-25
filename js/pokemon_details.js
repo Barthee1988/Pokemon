@@ -18,7 +18,7 @@ $('img').attr('draggable', false);
 // Show Image not available icon, If image path is undefined
 function imgError(image) {
 	image.onerror = "";
-	image.src = "img/image_not_available.jpg";
+	image.src = "image_not_available.jpg";
 	return true;
 }
 // Show selected Pokemon Card Details
