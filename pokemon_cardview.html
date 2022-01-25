@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+<title>Pokémon Card View</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.twbsPagination.min.js"></script>
+<script src="js/pokemon_main.js"></script>
+</head>
+<body oncontextmenu="return false">
+
+<h2>Pokémon Cards View</h2>
+<div class="row">
+	<div class="col-sm-6 ">
+		<ul class="pagination pagination-sm"></ul>
+	</div>
+	<div class="col-sm-6">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label for="myInput">Search All</label>
+					<input type="text" id="myInput" placeholder="Search by Name and Abilities" class="form-control" title="Type in a name" /> 
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label for="inputState">Sort By</label>
+					<select name="card_sort" id="card_sort_show" class="form-control" onchange="return changecardsort()" >
+						<option value="Default">Default</option>
+						<option value="Name">Name</option>
+						<option value="Height">Height</option>
+						<option value="Weight">Weight</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label for="inputState">Show Entries</label>
+					<select name="card_length" aria-controls="example" id="card_length_show" class="form-control" onchange="return changecardcount()">
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="50">50</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="pageContent">
+	<div class="row" id="pokeman">
+		<section class="loader-wrapper">
+			<div class="loader">
+				<div class="dot" style="--i:0;"></div>
+				<div class="dot" style="--i:1;"></div>
+				<div class="dot" style="--i:2;"></div>
+				<div class="dot" style="--i:3;"></div>
+				<div class="dot" style="--i:4;"></div>
+				<div class="dot" style="--i:5;"></div>
+				<div class="dot" style="--i:6;"></div>
+				<div class="dot" style="--i:7;"></div>
+				<div class="dot" style="--i:8;"></div>
+				<div class="dot" style="--i:9;"></div>
+			</div> 
+			<h2>LOADING...</h2>
+			<div class="loader">
+				<div class="dot" style="--i:0;"></div>
+				<div class="dot" style="--i:1;"></div>
+				<div class="dot" style="--i:2;"></div>
+				<div class="dot" style="--i:3;"></div>
+				<div class="dot" style="--i:4;"></div>
+				<div class="dot" style="--i:5;"></div>
+				<div class="dot" style="--i:6;"></div>
+				<div class="dot" style="--i:7;"></div>
+				<div class="dot" style="--i:8;"></div>
+				<div class="dot" style="--i:9;"></div>
+			</div> 
+		</section> 
+	</div>
+	<a href="#" class="show-top" style="float:right; display: none; position: sticky;" onclick="document.body.scrollTop=0;document.documentElement.scrollTop=0;event.preventDefault()">Back to top 🔝</a>
+</div>
+<div class="pageFooter">
+	<ul class="pagination pagination-sm"></ul>
+</div>
+<script>
+	// Global Variables
+	var data;
+	var $pagination = $('.pagination');
+	var totalRecords = 0;
+	var records = [];
+	var all_records= [];
+	var main_all_records = [];
+	var displayRecords = [];
+	var recPerPage = $("#card_length_show").val();
+	var page = 1;
+	var totalPages = 0;
+	$(".show-top").hide();
+	window.onbeforeunload = function () {return false;}
+	
+	$(document).ready(function()
+	{
+		 $.ajax({
+			url: "https://pokeapi.co/api/v2/pokemon?limit=1200&offset=0",
+			async: false,
+			dataType: 'json',
+			success: function (data) {
+				records = data;
+				totalRecords = records.count;
+				totalPages = Math.ceil(totalRecords / recPerPage);
+				gererate_main_json(JSON.parse(JSON.stringify(data)));
+			}
+		});
+	});
+	
+	// Enable Navigation on Left and Right Key Click
+	$(document).keyup(function(e) 
+	{
+		if(e.keyCode == 37) // Left Keycode
+		{
+			$(".prev").click();
+		}
+		if(e.keyCode == 39) // Right Keycode
+		{
+			$(".next").click();
+		}
+	});
+	
+	// Onkey press Search the 
+	$("#myInput").keyup(function() {
+		getFilter();
+	});
+</script>
+</body>
+</html>
