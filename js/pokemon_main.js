@@ -31,7 +31,7 @@
 	// Function to get Image not available icon.
 	function imgError(image) {
 		image.onerror = "";
-		image.src = "img/image_not_available.jpg";
+		image.src = "image_not_available.jpg";
 		return true;
 	}
 	// Generate Card View
